@@ -86,11 +86,6 @@ export default async function HomePage() {
       <Suspense>
         <Footer siteConfig={siteConfig} />
       </Suspense>
-      <WhatsAppButton
-        number={siteConfig.whatsappNumber}
-        message={siteConfig.whatsappMessage ?? 'Olá! Gostaria de solicitar um orçamento.'}
-        variant="floating"
-      />
     </>
   );
 }
