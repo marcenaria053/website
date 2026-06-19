@@ -11,7 +11,7 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: '053 Móveis Sob Medida',
-  description: 'Móveis sob medida de alto padrão com entrega rigorosamente no prazo. São Paulo.',
+  description: 'Móveis sob medida de alto padrão com entrega rigorosamente no prazo. Pelotas.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

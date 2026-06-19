@@ -35,7 +35,7 @@ export function Hero({ project, siteConfig }: HeroProps) {
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 pb-20 pt-32 text-center md:text-left">
         <p className="mb-4 font-serif text-xs uppercase tracking-[0.3em] text-primary">
-          Marcenaria de Luxo · São Paulo
+          Marcenaria de Luxo · Pelotas
         </p>
         <h1 className="mb-6 max-w-3xl font-serif text-4xl leading-tight text-foreground md:text-6xl">
           A Arte da Marcenaria com{' '}

@@ -10,14 +10,14 @@ const fallback: Testimonial[] = [
   {
     _id: '1',
     clientName: 'Carlos Albuquerque',
-    city: 'São Paulo',
+    city: 'Pelotas',
     quote:
       'A 053 superou minhas expectativas. Não apenas a qualidade da madeira é excepcional, mas eles entregaram exatamente no dia prometido. Uma raridade no mercado.',
   },
   {
     _id: '2',
     clientName: 'Mariana Fontes',
-    city: 'São Paulo',
+    city: 'Pelotas',
     quote:
       'O nível de detalhe nos acabamentos é impressionante. O closet que desenharam aproveitou cada milímetro do meu quarto. Recomendo de olhos fechados.',
   },

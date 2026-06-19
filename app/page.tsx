@@ -32,10 +32,10 @@ const defaultSiteConfig: SiteConfig = {
   name: '053 Móveis Sob Medida',
   whatsappNumber: '5511987654321',
   whatsappMessage: 'Olá! Gostaria de solicitar um orçamento.',
-  city: 'São Paulo',
-  metaTitle: '053 Móveis Sob Medida | Marcenaria de Luxo em São Paulo',
+  city: 'Pelotas',
+  metaTitle: '053 Móveis Sob Medida | Marcenaria de Luxo em Pelotas',
   metaDescription:
-    'Móveis sob medida de alto padrão com entrega rigorosamente no prazo. São Paulo e região.',
+    'Móveis sob medida de alto padrão com entrega rigorosamente no prazo. Pelotas e região.',
 };
 
 export async function generateMetadata(): Promise<Metadata> {
