@@ -5,7 +5,7 @@ import { client } from '@/sanity/lib/client';
 import { HOME_QUERY } from '@/sanity/lib/queries';
 import type { HomeData, SiteConfig } from '@/lib/types';
 import { Navbar } from '@/components/sections/Navbar';
-import { Hero } from '@/components/sections/Hero';
+import { Hero, HERO_DEFAULTS } from '@/components/sections/Hero';
 import { Ticker } from '@/components/sections/Ticker';
 import { Process } from '@/components/sections/Process';
 import { Services } from '@/components/sections/Services';
@@ -22,7 +22,7 @@ async function getHomeData(): Promise<HomeData> {
   cacheTag('home');
 
   if (!client) {
-    return { siteConfig: null, featuredProject: null, projects: [], services: [], testimonials: [], about: null };
+    return { siteConfig: null, projects: [], services: [], testimonials: [], about: null };
   }
 
   return client.fetch<HomeData>(HOME_QUERY);
@@ -66,15 +66,15 @@ export default async function HomePage() {
   const data = await getHomeData();
 
   const siteConfig = data.siteConfig ?? defaultSiteConfig;
-  const featuredProject = data.featuredProject ?? data.projects?.[0] ?? null;
+  const heroSubtitle = siteConfig.hero?.subtitle ?? HERO_DEFAULTS.subtitle;
 
   return (
     <>
       <Navbar siteConfig={siteConfig} />
       <main>
-        <Hero project={featuredProject} siteConfig={siteConfig} />
+        <Hero siteConfig={siteConfig} />
         <Ticker />
-        <Process />
+        <Process mobileIntro={heroSubtitle} />
         <Services services={data.services ?? []} />
         <Portfolio projects={data.projects ?? []} />
         <About about={data.about} />
@@ -86,6 +86,13 @@ export default async function HomePage() {
       <Suspense>
         <Footer siteConfig={siteConfig} />
       </Suspense>
+
+      {/* WhatsApp flutuante persistente — sempre visível (mobile e desktop). */}
+      <WhatsAppButton
+        variant="floating"
+        number={siteConfig.whatsappNumber}
+        message={siteConfig.whatsappMessage ?? 'Olá! Gostaria de solicitar um orçamento.'}
+      />
     </>
   );
 }

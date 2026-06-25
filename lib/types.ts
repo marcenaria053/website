@@ -14,12 +14,9 @@ export interface SanityImage {
 export interface Project {
   _id: string;
   title: string;
-  slug: string;
   category: ProjectCategory;
   cover: SanityImage;
   gallery: SanityImage[];
-  description?: string;
-  featured: boolean;
   order: number;
 }
 
@@ -60,11 +57,22 @@ export interface SiteConfig extends SiteConfigDefault {
   logo?: SanityImage;
   instagram?: string;
   ogImage?: SanityImage;
+  hero?: HeroContent;
+}
+
+export interface HeroContent {
+  eyebrow?: string;
+  title?: string;
+  titleHighlight?: string;
+  subtitle?: string;
+  /** Linha curta de apoio exibida no mobile (R7, ≤ 8 palavras). */
+  supportLine?: string;
+  primaryCtaLabel?: string;
+  secondaryCtaLabel?: string;
 }
 
 export interface HomeData {
   siteConfig: SiteConfig | null;
-  featuredProject: Project | null;
   projects: Project[];
   services: Service[];
   testimonials: Testimonial[];

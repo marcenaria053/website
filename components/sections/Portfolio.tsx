@@ -62,9 +62,10 @@ export function Portfolio({ projects }: PortfolioProps) {
       {lightbox && (
         <Lightbox
           images={
-            lightbox.project.gallery.length > 0
-              ? [lightbox.project.cover, ...lightbox.project.gallery] as SanityImage[]
-              : [lightbox.project.cover] as SanityImage[]
+            [
+              ...(lightbox.project.cover ? [lightbox.project.cover] : []),
+              ...(lightbox.project.gallery ?? []),
+            ] as SanityImage[]
           }
           title={lightbox.project.title}
           initialIndex={lightbox.index}

@@ -1,20 +1,13 @@
 export const HOME_QUERY = /* groq */ `{
   "siteConfig": *[_type == "siteConfig"][0]{
     name, logo, whatsappNumber, whatsappMessage, instagram, city,
-    metaTitle, metaDescription, ogImage
+    hero, metaTitle, metaDescription, ogImage
   },
-  "featuredProject": *[_type == "project" && featured == true]
-    | order(order asc)[0]{
-      _id, title, "slug": slug.current, category,
-      cover{..., "lqip": asset->metadata.lqip},
-      "gallery": gallery[]{..., "lqip": asset->metadata.lqip},
-      description, featured, order
-    },
   "projects": *[_type == "project"] | order(order asc){
-    _id, title, "slug": slug.current, category,
+    _id, title, category,
     cover{..., "lqip": asset->metadata.lqip},
     "gallery": gallery[]{..., "lqip": asset->metadata.lqip},
-    description, featured, order
+    order
   },
   "services": *[_type == "service"] | order(order asc){
     _id, name, description, icon, order

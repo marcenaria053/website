@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import useEmblaCarousel from 'embla-carousel-react';
 import { urlForImage } from '@/sanity/lib/image';
 import type { SanityImage } from '@/lib/types';
 
@@ -15,20 +16,35 @@ interface LightboxProps {
 
 export function Lightbox({ images, title, initialIndex, open, onClose }: LightboxProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ startIndex: initialIndex });
   const [current, setCurrent] = useState(initialIndex);
 
+  // Sincroniza o índice atual com o Embla (listener apenas — sem setState síncrono no efeito).
   useEffect(() => {
-    setCurrent(initialIndex);
-  }, [initialIndex]);
+    if (!emblaApi) return;
+    const onSelect = () => setCurrent(emblaApi.selectedScrollSnap());
+    emblaApi.on('select', onSelect);
+    return () => {
+      emblaApi.off('select', onSelect);
+    };
+  }, [emblaApi]);
+
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+  const scrollTo = useCallback((i: number) => emblaApi?.scrollTo(i), [emblaApi]);
 
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
     if (open) {
       dialog.showModal();
-    } else {
-      dialog.close();
+      const prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = prevOverflow;
+      };
     }
+    dialog.close();
   }, [open]);
 
   useEffect(() => {
@@ -42,20 +58,14 @@ export function Lightbox({ images, title, initialIndex, open, onClose }: Lightbo
   useEffect(() => {
     if (!open) return;
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight') next();
-      if (e.key === 'ArrowLeft') prev();
+      if (e.key === 'ArrowRight') scrollNext();
+      if (e.key === 'ArrowLeft') scrollPrev();
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [open, current, images.length]);
+  }, [open, scrollNext, scrollPrev]);
 
-  const prev = () => setCurrent((c) => (c - 1 + images.length) % images.length);
-  const next = () => setCurrent((c) => (c + 1) % images.length);
-
-  const img = images[current];
-  if (!img) return null;
-
-  const imageUrl = urlForImage(img).width(1400).url();
+  if (images.length === 0) return null;
 
   return (
     <dialog
@@ -64,9 +74,9 @@ export function Lightbox({ images, title, initialIndex, open, onClose }: Lightbo
       onClick={(e) => {
         if (e.target === dialogRef.current) onClose();
       }}
-      className="m-auto w-full max-w-5xl overflow-hidden rounded-sm bg-card p-0 backdrop:bg-card/80 backdrop:backdrop-blur-sm"
+      className="m-0 h-dvh max-h-dvh w-screen max-w-none overflow-hidden bg-card p-0 backdrop:bg-card/80 backdrop:backdrop-blur-sm"
     >
-      <div className="flex flex-col">
+      <div className="flex h-full flex-col">
         <div className="flex items-center justify-between border-b border-border px-4 py-3">
           <p className="font-serif text-sm text-foreground">{title}</p>
           <div className="flex items-center gap-3">
@@ -85,32 +95,54 @@ export function Lightbox({ images, title, initialIndex, open, onClose }: Lightbo
           </div>
         </div>
 
-        <div className="relative aspect-video bg-background">
-          <Image
-            src={imageUrl}
-            alt={img.alt ?? title}
-            fill
-            sizes="100vw"
-            className="object-contain"
-            blurDataURL={img.lqip}
-            placeholder={img.lqip ? 'blur' : 'empty'}
-          />
+        <div className="relative min-h-0 flex-1 bg-background">
+          {/* Carrossel Embla: arraste/slide entre as fotos. Cada slide tem fundo borrado + imagem inteira. */}
+          <div className="h-full overflow-hidden" ref={emblaRef}>
+            <div className="flex h-full">
+              {images.map((slide, i) => {
+                const slideUrl = urlForImage(slide).width(1920).url();
+                return (
+                  <div key={i} className="relative h-full min-w-0 flex-[0_0_100%] overflow-hidden">
+                    {/* Fundo borrado preenchendo as sobras do object-contain. */}
+                    <Image
+                      src={slideUrl}
+                      alt=""
+                      aria-hidden
+                      fill
+                      sizes="100vw"
+                      className="scale-110 object-cover blur"
+                    />
+                    {/* Imagem nítida, inteira e centralizada. */}
+                    <Image
+                      src={slideUrl}
+                      alt={slide.alt ?? title}
+                      fill
+                      sizes="100vw"
+                      className="object-contain"
+                      blurDataURL={slide.lqip}
+                      placeholder={slide.lqip ? 'blur' : 'empty'}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
 
           {images.length > 1 && (
             <>
               <button
-                onClick={prev}
+                onClick={scrollPrev}
                 aria-label="Imagem anterior"
-                className="absolute left-3 top-1/2 -translate-y-1/2 rounded-sm border border-border bg-card/80 p-2 text-foreground transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
+                className="absolute left-3 top-1/2 z-10 -translate-y-1/2 rounded-sm border border-border bg-card/80 p-2 text-foreground transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
               >
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
                 </svg>
               </button>
               <button
-                onClick={next}
+                onClick={scrollNext}
                 aria-label="Próxima imagem"
-                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-sm border border-border bg-card/80 p-2 text-foreground transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
+                className="absolute right-3 top-1/2 z-10 -translate-y-1/2 rounded-sm border border-border bg-card/80 p-2 text-foreground transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
               >
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
@@ -121,16 +153,16 @@ export function Lightbox({ images, title, initialIndex, open, onClose }: Lightbo
         </div>
 
         {images.length > 1 && (
-          <div className="flex gap-2 overflow-x-auto p-3">
+          <div className="hidden gap-2 overflow-x-auto p-3 sm:flex">
             {images.map((thumb, i) => {
               const thumbUrl = urlForImage(thumb).width(120).url();
               return (
                 <button
                   key={i}
-                  onClick={() => setCurrent(i)}
+                  onClick={() => scrollTo(i)}
                   aria-label={`Ir para imagem ${i + 1}`}
                   className={`relative h-16 w-20 shrink-0 overflow-hidden rounded-sm transition-opacity focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary ${
-                    i === current ? 'ring-1 ring-primary opacity-100' : 'opacity-50 hover:opacity-80'
+                    i === current ? 'opacity-100 ring-1 ring-primary' : 'opacity-50 hover:opacity-80'
                   }`}
                 >
                   <Image

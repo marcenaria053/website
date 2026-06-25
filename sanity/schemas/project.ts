@@ -6,7 +6,6 @@ export const project = defineType({
   type: 'document',
   fields: [
     defineField({ name: 'title', title: 'Título', type: 'string', validation: (r) => r.required() }),
-    defineField({ name: 'slug', title: 'Slug', type: 'slug', options: { source: 'title' }, validation: (r) => r.required() }),
     defineField({
       name: 'category',
       title: 'Categoria',
@@ -42,8 +41,6 @@ export const project = defineType({
         },
       ],
     }),
-    defineField({ name: 'description', title: 'Descrição', type: 'text', rows: 3 }),
-    defineField({ name: 'featured', title: 'Destaque (aparece no Hero)', type: 'boolean', initialValue: false }),
     defineField({ name: 'order', title: 'Ordem', type: 'number', initialValue: 0 }),
   ],
   orderings: [{ title: 'Ordem', name: 'orderAsc', by: [{ field: 'order', direction: 'asc' }] }],

@@ -25,7 +25,12 @@ const steps = [
   },
 ];
 
-export function Process() {
+interface ProcessProps {
+  /** Texto realocado do hero no mobile (R6). Renderizado apenas em telas < md. */
+  mobileIntro?: string;
+}
+
+export function Process({ mobileIntro }: ProcessProps) {
   return (
     <section className="bg-background py-24">
       <div className="mx-auto max-w-7xl px-6">
@@ -36,6 +41,11 @@ export function Process() {
           <h2 className="font-serif text-3xl text-foreground md:text-4xl">
             Nosso Método de Trabalho
           </h2>
+          {mobileIntro && (
+            <p className="mx-auto mt-6 max-w-xl font-serif text-base leading-relaxed text-muted md:hidden">
+              {mobileIntro}
+            </p>
+          )}
         </div>
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
