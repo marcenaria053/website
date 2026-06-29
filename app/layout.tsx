@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Playfair_Display } from 'next/font/google';
 import { GoogleAnalytics } from '@next/third-parties/google';
+import { SITE_URL, businessJsonLd } from '@/lib/business';
 import './globals.css';
 
 const playfair = Playfair_Display({
@@ -10,6 +11,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: '053 Móveis Sob Medida',
   description: 'Móveis sob medida de alto padrão com entrega rigorosamente no prazo. Pelotas.',
 };
@@ -23,6 +25,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://cdn.sanity.io" />
       </head>
       <body className="min-h-full bg-background text-foreground">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd) }}
+        />
         {children}
       </body>
       {gaId && <GoogleAnalytics gaId={gaId} />}

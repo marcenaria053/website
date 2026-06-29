@@ -2,6 +2,9 @@ import Image from 'next/image';
 import { Suspense } from 'react';
 import { urlForImage } from '@/sanity/lib/image';
 import { CurrentYear } from '@/components/ui/CurrentYear';
+import { MapPin } from 'lucide-react';
+import { WhatsAppIcon } from '@/components/ui/WhatsAppButton';
+import { BUSINESS } from '@/lib/business';
 import type { SiteConfig } from '@/lib/types';
 
 interface FooterProps {
@@ -63,15 +66,16 @@ export function Footer({ siteConfig }: FooterProps) {
             <p className="mb-4 font-serif text-xs uppercase tracking-widest text-primary">
               Contato
             </p>
-            <ul className="space-y-3" role="list">
+            <ul className="flex items-center gap-3" role="list">
               <li>
                 <a
                   href={waLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 font-serif text-sm text-muted transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded-sm"
+                  aria-label="Fale conosco no WhatsApp"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-border text-muted transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 >
-                  <span className="text-primary">WhatsApp</span>
+                  <WhatsAppIcon className="h-5 w-5" />
                 </a>
               </li>
               {igLink && (
@@ -80,15 +84,24 @@ export function Footer({ siteConfig }: FooterProps) {
                     href={igLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-serif text-sm text-muted transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded-sm"
+                    aria-label="Siga a 053 no Instagram"
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-border text-muted transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                   >
-                    <span className="text-primary">Instagram</span>
-                    {instagram && (
-                      <span className="ml-2 text-muted">{instagram.startsWith('@') ? instagram : `@${instagram}`}</span>
-                    )}
+                    <InstagramIcon className="h-5 w-5" />
                   </a>
                 </li>
               )}
+              <li>
+                <a
+                  href={BUSINESS.googleProfileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Ver a 053 no Google Maps"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-border text-muted transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                >
+                  <MapPin className="h-5 w-5" aria-hidden="true" />
+                </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -103,5 +116,24 @@ export function Footer({ siteConfig }: FooterProps) {
         </div>
       </div>
     </footer>
+  );
+}
+
+function InstagramIcon({ className = 'h-5 w-5' }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.8}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <rect x="2" y="2" width="20" height="20" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+    </svg>
   );
 }

@@ -35,7 +35,7 @@ export const TeamCarousel = ({ team }: TeamCarouselProps) => {
   const total = members.length;
 
   return (
-    <div>
+    <div className="mx-auto w-full max-w-sm">
       <div className="relative">
         <div
           ref={emblaRef}
@@ -45,18 +45,30 @@ export const TeamCarousel = ({ team }: TeamCarouselProps) => {
           aria-label="Equipe 053"
         >
           <div className="flex">
-            {members.map((member, i) => (
+            {members.map((member, i) => {
+              const photoUrl = urlForImage(member.photo).width(800).url();
+              return (
               <figure
                 key={`${member.name}-${i}`}
-                className="relative aspect-[4/3] min-w-0 flex-[0_0_100%]"
+                className="relative aspect-square min-w-0 flex-[0_0_100%] overflow-hidden"
                 aria-hidden={i !== selectedIndex}
               >
+                {/* Fundo borrado preenchendo as sobras do object-contain. */}
                 <Image
-                  src={urlForImage(member.photo).width(900).url()}
+                  src={photoUrl}
+                  alt=""
+                  aria-hidden
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 400px"
+                  className="scale-110 object-cover blur"
+                />
+                {/* Imagem nítida, inteira e centralizada. */}
+                <Image
+                  src={photoUrl}
                   alt={member.photo.alt ?? member.name}
                   fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 400px"
+                  className="object-contain"
                   blurDataURL={member.photo.lqip}
                   placeholder={member.photo.lqip ? 'blur' : 'empty'}
                 />
@@ -69,7 +81,8 @@ export const TeamCarousel = ({ team }: TeamCarouselProps) => {
                   )}
                 </figcaption>
               </figure>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -106,7 +119,7 @@ export const TeamCarousel = ({ team }: TeamCarouselProps) => {
               aria-label={`Ir para ${member.name}`}
               onClick={() => scrollTo(i)}
               className={`h-2 rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
-                i === selectedIndex ? 'w-6 bg-primary' : 'w-2 bg-border hover:bg-muted'
+                i === selectedIndex ? 'w-6 bg-primary' : 'w-2 bg-muted/40 hover:bg-muted'
               }`}
             />
           ))}
