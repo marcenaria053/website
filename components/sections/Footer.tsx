@@ -93,7 +93,7 @@ export function Footer({ siteConfig }: FooterProps) {
               )}
               <li>
                 <a
-                  href={BUSINESS.googleProfileUrl}
+                  href={BUSINESS.mapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Ver a 053 no Google Maps"

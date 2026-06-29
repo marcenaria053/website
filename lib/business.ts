@@ -1,6 +1,8 @@
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.053moveissobmedida.com';
 
+const MAPS_QUERY = '053 Móveis Sob Medida, R. Adalberto Guerra Duval, 258 - Fragata, Pelotas - RS';
+
 /** Dados do negócio (NAP) — fonte única para JSON-LD, footer e SEO local. */
 export const BUSINESS = {
   name: '053 Móveis Sob Medida',
@@ -8,6 +10,7 @@ export const BUSINESS = {
   image: `${SITE_URL}/hero-053.webp`,
   telephone: '+5553999829915',
   googleProfileUrl: 'https://share.google/xcN8jikkFYs6lDqaa',
+  mapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(MAPS_QUERY)}`,
   instagramUrl: 'https://www.instagram.com/053moveissobmedida',
   address: {
     streetAddress: 'R. Adalberto Guerra Duval, 258 - Fragata',
