@@ -15,6 +15,7 @@ export const project = defineType({
           { title: 'Cozinha', value: 'cozinha' },
           { title: 'Banheiro', value: 'banheiro' },
           { title: 'Sala', value: 'sala' },
+          { title: 'Quarto', value: 'quarto' },
           { title: 'Escritório', value: 'escritorio' },
           { title: 'Outro', value: 'outro' },
         ],

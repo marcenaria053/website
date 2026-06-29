@@ -11,17 +11,18 @@ import type { SiteConfig } from "@/lib/types";
 
 interface NavbarProps {
   siteConfig: SiteConfig;
+  hasAbout: boolean;
 }
 
-const navLinks = [
-  { href: "#servicos", label: "Serviços" },
-  { href: "#portfolio", label: "Portfólio" },
-  { href: "#sobre", label: "Sobre" },
-  { href: "#contato", label: "Contato" },
-];
-
-export function Navbar({ siteConfig }: NavbarProps) {
+export function Navbar({ siteConfig, hasAbout }: NavbarProps) {
   const { name, logo, whatsappNumber, whatsappMessage } = siteConfig;
+
+  const navLinks = [
+    { href: '#servicos', label: 'Serviços' },
+    { href: '#portfolio', label: 'Portfólio' },
+    ...(hasAbout ? [{ href: '#sobre', label: 'Sobre' }] : []),
+    { href: '#contato', label: 'Contato' },
+  ];
   const logoUrl = logo ? urlForImage(logo).height(48).url() : null;
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);

@@ -15,6 +15,7 @@ export const categoryLabels: Record<ProjectCategory | 'todos', string> = {
   cozinha: 'Cozinhas',
   banheiro: 'Banheiros',
   sala: 'Salas',
+  quarto: 'Quartos',
   escritorio: 'Escritórios',
   outro: 'Outros',
 };

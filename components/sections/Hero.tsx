@@ -16,6 +16,7 @@ export const HERO_DEFAULTS = {
     'Projetamos e executamos móveis sob medida de alto padrão, combinando estética refinada, materiais nobres e o compromisso inegociável com os prazos de entrega.',
   primaryCtaLabel: 'Agendar Consultoria',
   secondaryCtaLabel: 'Ver Portfólio',
+  socialProof: 'Projeto 3D sob medida · Entrega no prazo · Pelotas e região',
 } as const;
 
 export function Hero({ siteConfig }: HeroProps) {
@@ -123,6 +124,14 @@ export function Hero({ siteConfig }: HeroProps) {
             {secondaryCtaLabel}
           </a>
         </div>
+
+        {/* Microprova qualitativa — claims já verdadeiros no site (sem número/nota).
+            Mobile-safe: abaixo do CTA primário + text-xs, não empurra o CTA para fora da dobra. */}
+        {HERO_DEFAULTS.socialProof && (
+          <p className="mt-6 font-serif text-xs uppercase tracking-[0.15em] text-foreground/70 [text-shadow:0_1px_8px_rgba(0,0,0,0.75)] md:mt-8 md:[text-shadow:none]">
+            {HERO_DEFAULTS.socialProof}
+          </p>
+        )}
       </div>
 
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">

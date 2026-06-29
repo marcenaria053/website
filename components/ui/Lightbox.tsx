@@ -78,9 +78,9 @@ export function Lightbox({ images, title, initialIndex, open, onClose }: Lightbo
     >
       <div className="flex h-full flex-col">
         <div className="flex items-center justify-between border-b border-border px-4 py-3">
-          <p className="font-serif text-sm text-foreground">{title}</p>
-          <div className="flex items-center gap-3">
-            <span className="font-serif text-xs text-muted">
+          <p className="font-serif text-sm capitalize text-foreground">{title}</p>
+          <div className="flex shrink-0 items-center gap-3">
+            <span className="whitespace-nowrap font-serif text-xs text-muted">
               {current + 1} / {images.length}
             </span>
             <button

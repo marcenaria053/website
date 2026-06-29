@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { FilterBar } from '@/components/ui/FilterBar';
 import { ProjectCard } from '@/components/ui/ProjectCard';
 import { Lightbox } from '@/components/ui/Lightbox';
+import { hasImageAsset } from '@/sanity/lib/image';
 import type { Project, ProjectCategory, SanityImage } from '@/lib/types';
 
 type FilterCategory = ProjectCategory | 'todos';
@@ -62,10 +63,12 @@ export function Portfolio({ projects }: PortfolioProps) {
       {lightbox && (
         <Lightbox
           images={
-            [
-              ...(lightbox.project.cover ? [lightbox.project.cover] : []),
-              ...(lightbox.project.gallery ?? []),
-            ] as SanityImage[]
+            (
+              [
+                ...(lightbox.project.cover ? [lightbox.project.cover] : []),
+                ...(lightbox.project.gallery ?? []),
+              ] as SanityImage[]
+            ).filter(hasImageAsset)
           }
           title={lightbox.project.title}
           initialIndex={lightbox.index}

@@ -10,6 +10,8 @@ import { Ticker } from '@/components/sections/Ticker';
 import { Process } from '@/components/sections/Process';
 import { Services } from '@/components/sections/Services';
 import { Portfolio } from '@/components/sections/Portfolio';
+import { InlineCtaBanner } from '@/components/sections/InlineCtaBanner';
+import { MetricsBar } from '@/components/sections/MetricsBar';
 import { About } from '@/components/sections/About';
 import { Testimonials } from '@/components/sections/Testimonials';
 import { CtaFinal } from '@/components/sections/CtaFinal';
@@ -67,16 +69,32 @@ export default async function HomePage() {
 
   const siteConfig = data.siteConfig ?? defaultSiteConfig;
   const heroSubtitle = siteConfig.hero?.subtitle ?? HERO_DEFAULTS.subtitle;
+  const hasAbout = data.about != null;
 
   return (
     <>
-      <Navbar siteConfig={siteConfig} />
+      <Navbar siteConfig={siteConfig} hasAbout={hasAbout} />
       <main>
         <Hero siteConfig={siteConfig} />
+        <MetricsBar about={data.about} />
         <Ticker />
         <Process mobileIntro={heroSubtitle} />
+        <InlineCtaBanner
+          siteConfig={siteConfig}
+          heading="Gostou do nosso método? Vamos planejar o seu projeto."
+          ctaLabel="Agendar Consultoria"
+          whatsappMessage="Olá! Vi o método de vocês e gostaria de agendar uma consultoria."
+          variant="default"
+        />
         <Services services={data.services ?? []} />
         <Portfolio projects={data.projects ?? []} />
+        <InlineCtaBanner
+          siteConfig={siteConfig}
+          heading="Inspirado pelo nosso portfólio? Conte sua ideia."
+          ctaLabel="Solicitar Orçamento"
+          whatsappMessage="Olá! Vi o portfólio de vocês e gostaria de um orçamento."
+          variant="alt"
+        />
         <About about={data.about} />
         <Testimonials testimonials={data.testimonials ?? []} />
         <Suspense>

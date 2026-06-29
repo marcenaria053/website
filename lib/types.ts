@@ -1,6 +1,6 @@
 import type { PortableTextBlock } from '@portabletext/types';
 
-export type ProjectCategory = 'cozinha' | 'banheiro' | 'sala' | 'escritorio' | 'outro';
+export type ProjectCategory = 'cozinha' | 'banheiro' | 'sala' | 'quarto' | 'escritorio' | 'outro';
 
 export interface SanityImage {
   _type: 'image';
@@ -36,12 +36,19 @@ export interface Testimonial {
   avatar?: SanityImage;
 }
 
+export interface TeamMember {
+  name: string;
+  role?: string;
+  photo: SanityImage;
+}
+
 export interface About {
   photo?: SanityImage;
   body?: PortableTextBlock[];
   yearsOfExperience?: number;
   projectsDelivered?: number;
   highlights?: string[];
+  team?: TeamMember[];
 }
 
 export interface SiteConfigDefault {

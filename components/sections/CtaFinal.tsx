@@ -130,6 +130,10 @@ export function CtaFinal({ siteConfig }: CtaFinalProps) {
                   >
                     {isPending ? 'Enviando...' : 'Enviar Solicitação'}
                   </button>
+
+                  <p className="text-center font-serif text-xs text-muted">
+                    Seus dados estão seguros. Não compartilhamos com terceiros.
+                  </p>
                 </div>
               </form>
             )}

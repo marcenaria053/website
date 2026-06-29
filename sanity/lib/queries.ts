@@ -18,6 +18,7 @@ export const HOME_QUERY = /* groq */ `{
   },
   "about": *[_type == "about"][0]{
     photo{..., "lqip": asset->metadata.lqip},
-    body, yearsOfExperience, projectsDelivered, highlights
+    body, yearsOfExperience, projectsDelivered, highlights,
+    team[]{ name, role, photo{..., "lqip": asset->metadata.lqip} }
   }
 }`;

@@ -1,4 +1,4 @@
-import { defineField, defineType } from 'sanity';
+import { defineArrayMember, defineField, defineType } from 'sanity';
 
 export const about = defineType({
   name: 'about',
@@ -28,6 +28,32 @@ export const about = defineType({
       title: 'Diferenciais',
       type: 'array',
       of: [{ type: 'string' }],
+    }),
+    defineField({
+      name: 'team',
+      title: 'Equipe',
+      description: 'Fotos da equipe e do ateliê exibidas no carrossel da seção Sobre.',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'teamMember',
+          title: 'Membro',
+          fields: [
+            defineField({
+              name: 'photo',
+              title: 'Foto',
+              type: 'image',
+              options: { hotspot: true },
+              fields: [defineField({ name: 'alt', title: 'Texto alternativo', type: 'string' })],
+              validation: (r) => r.required(),
+            }),
+            defineField({ name: 'name', title: 'Nome', type: 'string', validation: (r) => r.required() }),
+            defineField({ name: 'role', title: 'Função', type: 'string' }),
+          ],
+          preview: { select: { title: 'name', subtitle: 'role', media: 'photo' } },
+        }),
+      ],
     }),
   ],
 });

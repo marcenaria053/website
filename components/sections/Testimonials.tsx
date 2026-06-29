@@ -71,7 +71,7 @@ export function Testimonials({ testimonials }: TestimonialsProps) {
                     </div>
                   )}
                   <div>
-                    <p className="font-serif text-sm text-foreground">{t.clientName}</p>
+                    <p className="font-serif text-sm capitalize text-foreground">{t.clientName}</p>
                     {t.city && (
                       <p className="font-serif text-xs text-muted">{t.city}</p>
                     )}
