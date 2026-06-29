@@ -2,7 +2,8 @@
 
 import { useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
-import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
+import { CtaButton } from '@/components/ui/CtaButton';
+import { WhatsAppIcon } from '@/components/ui/WhatsAppButton';
 
 interface MobileNavLink {
   href: string;
@@ -13,13 +14,11 @@ interface MobileNavProps {
   open: boolean;
   onClose: () => void;
   links: MobileNavLink[];
-  whatsappNumber: string;
-  whatsappMessage: string;
 }
 
 const ANIM_MS = 320;
 
-export function MobileNav({ open, onClose, links, whatsappNumber, whatsappMessage }: MobileNavProps) {
+export function MobileNav({ open, onClose, links }: MobileNavProps) {
   const panelRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -122,11 +121,12 @@ export function MobileNav({ open, onClose, links, whatsappNumber, whatsappMessag
         </nav>
 
         <div className="mt-auto pt-8">
-          <WhatsAppButton
-            number={whatsappNumber}
-            message={whatsappMessage}
+          <CtaButton
+            href="#contato"
             label="Orçamento"
-            className="w-full justify-center"
+            onClick={onClose}
+            icon={<WhatsAppIcon className="h-4 w-4" />}
+            className="w-full"
           />
         </div>
       </div>

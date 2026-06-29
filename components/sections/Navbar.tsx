@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { clsx } from "clsx";
 import { Menu } from "lucide-react";
-import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
+import { CtaButton } from '@/components/ui/CtaButton';
+import { WhatsAppIcon } from '@/components/ui/WhatsAppButton';
 import { MobileNav } from "@/components/sections/MobileNav";
 import { urlForImage } from "@/sanity/lib/image";
 import type { SiteConfig } from "@/lib/types";
@@ -15,7 +16,7 @@ interface NavbarProps {
 }
 
 export function Navbar({ siteConfig, hasAbout }: NavbarProps) {
-  const { name, logo, whatsappNumber, whatsappMessage } = siteConfig;
+  const { name, logo } = siteConfig;
 
   const navLinks = [
     { href: '#servicos', label: 'Serviços' },
@@ -84,12 +85,12 @@ export function Navbar({ siteConfig, hasAbout }: NavbarProps) {
             ))}
           </ul>
 
-          {/* "Orçamento": porta rápida de conversão no header — desktop (R11). */}
+          {/* "Orçamento": porta de conversão no header → rola até o formulário (R11). */}
           <div className="hidden md:block">
-            <WhatsAppButton
-              number={whatsappNumber}
-              message={whatsappMessage ?? "Olá! Gostaria de solicitar um orçamento."}
+            <CtaButton
+              href="#contato"
               label="Orçamento"
+              icon={<WhatsAppIcon className="h-4 w-4" />}
             />
           </div>
 
@@ -107,15 +108,7 @@ export function Navbar({ siteConfig, hasAbout }: NavbarProps) {
         </nav>
       </header>
 
-      <MobileNav
-        open={menuOpen}
-        onClose={() => setMenuOpen(false)}
-        links={navLinks}
-        whatsappNumber={whatsappNumber}
-        whatsappMessage={
-          whatsappMessage ?? "Olá! Gostaria de solicitar um orçamento."
-        }
-      />
+      <MobileNav open={menuOpen} onClose={() => setMenuOpen(false)} links={navLinks} />
     </>
   );
 }

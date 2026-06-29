@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
+import { CtaButton } from '@/components/ui/CtaButton';
+import { WhatsAppIcon } from '@/components/ui/WhatsAppButton';
 import heroBackground from '@/public/hero-053.webp';
 import heroBackgroundMobile from '@/public/hero-053-mobile.webp';
 import type { SiteConfig } from '@/lib/types';
@@ -20,7 +21,7 @@ export const HERO_DEFAULTS = {
 } as const;
 
 export function Hero({ siteConfig }: HeroProps) {
-  const { whatsappNumber, whatsappMessage, hero } = siteConfig;
+  const { hero } = siteConfig;
 
   const eyebrow = hero?.eyebrow ?? HERO_DEFAULTS.eyebrow;
   const title = hero?.title ?? HERO_DEFAULTS.title;
@@ -109,11 +110,11 @@ export function Hero({ siteConfig }: HeroProps) {
         )}
 
         <div className="flex flex-col items-stretch gap-4 md:flex-row md:items-start">
-          {/* CTA primário sólido (dourado encorpado, mesmo tom do mobile) — mobile e desktop (R1–R3). */}
-          <WhatsAppButton
-            number={whatsappNumber}
-            message={whatsappMessage ?? 'Olá! Gostaria de agendar uma consultoria.'}
+          {/* CTA primário sólido (dourado encorpado, mesmo tom do mobile) — rola até o formulário (R1–R3). */}
+          <CtaButton
+            href="#contato"
             label={primaryCtaLabel}
+            icon={<WhatsAppIcon className="h-4 w-4" />}
             className="w-full justify-center !bg-[#b6863a] hover:!bg-[#c9a05a] md:w-auto"
           />
           {/* "Ver Portfólio": secundário discreto no mobile; botão com borda no desktop. */}

@@ -1,25 +1,14 @@
-import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
-import type { SiteConfig } from '@/lib/types';
+import { CtaButton } from '@/components/ui/CtaButton';
+import { WhatsAppIcon } from '@/components/ui/WhatsAppButton';
 
 interface InlineCtaBannerProps {
-  siteConfig: SiteConfig;
   heading: string;
   ctaLabel: string;
-  whatsappMessage?: string;
   /** Alterna a textura/fundo para criar ritmo visual entre as duas faixas. */
   variant?: 'default' | 'alt';
 }
 
-export const InlineCtaBanner = ({
-  siteConfig,
-  heading,
-  ctaLabel,
-  whatsappMessage,
-  variant = 'default',
-}: InlineCtaBannerProps) => {
-  const message =
-    whatsappMessage ?? siteConfig.whatsappMessage ?? 'Olá! Gostaria de solicitar um orçamento.';
-
+export const InlineCtaBanner = ({ heading, ctaLabel, variant = 'default' }: InlineCtaBannerProps) => {
   return (
     <section
       className={
@@ -32,11 +21,10 @@ export const InlineCtaBanner = ({
         <h2 className="max-w-2xl text-balance font-serif text-2xl text-foreground md:text-3xl">
           {heading}
         </h2>
-        <WhatsAppButton
-          number={siteConfig.whatsappNumber}
-          message={message}
-          variant="inline"
+        <CtaButton
+          href="#contato"
           label={ctaLabel}
+          icon={<WhatsAppIcon className="h-4 w-4" />}
           className="w-full justify-center md:w-auto"
         />
       </div>
