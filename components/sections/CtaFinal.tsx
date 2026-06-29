@@ -1,6 +1,6 @@
 'use client';
 
-import { WhatsAppButton, WhatsAppIcon } from '@/components/ui/WhatsAppButton';
+import { WhatsAppIcon } from '@/components/ui/WhatsAppButton';
 import { buildWhatsAppLink, investmentOptions } from '@/lib/utils';
 import type { SiteConfig } from '@/lib/types';
 
@@ -44,15 +44,10 @@ export function CtaFinal({ siteConfig }: CtaFinalProps) {
             <h2 className="mb-6 font-serif text-3xl text-foreground md:text-4xl">
               Pronto para dar o próximo passo no seu projeto?
             </h2>
-            <p className="mb-10 font-serif text-base leading-relaxed text-foreground/70">
+            <p className="font-serif text-base leading-relaxed text-foreground/70">
               Nossa equipe está pronta para entender suas necessidades e apresentar soluções de
               design exclusivas com orçamentos detalhados.
             </p>
-            <WhatsAppButton
-              number={siteConfig.whatsappNumber}
-              message={siteConfig.whatsappMessage ?? 'Olá! Gostaria de solicitar um orçamento.'}
-              label="Falar pelo WhatsApp"
-            />
           </div>
 
           <div className="rounded-sm border border-border bg-card p-8">
