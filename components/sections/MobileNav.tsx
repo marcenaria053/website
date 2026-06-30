@@ -123,7 +123,7 @@ export function MobileNav({ open, onClose, links }: MobileNavProps) {
         <div className="mt-auto pt-8">
           <CtaButton
             href="#contato"
-            label="Orçamento"
+            label="Solicitar Projeto"
             onClick={onClose}
             icon={<WhatsAppIcon className="h-4 w-4" />}
             className="w-full"

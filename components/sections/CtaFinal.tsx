@@ -51,7 +51,7 @@ export function CtaFinal({ siteConfig }: CtaFinalProps) {
           </div>
 
           <div className="rounded-sm border border-border bg-card p-8">
-            <h3 className="mb-6 font-serif text-xl text-foreground">Solicitar Orçamento</h3>
+            <h3 className="mb-6 font-serif text-xl text-foreground">Solicitar Projeto</h3>
 
             <form onSubmit={handleSubmit}>
               <div className="space-y-4">

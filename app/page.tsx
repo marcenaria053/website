@@ -81,14 +81,14 @@ export default async function HomePage() {
         <Process mobileIntro={heroSubtitle} />
         <InlineCtaBanner
           heading="Gostou do nosso método? Vamos planejar o seu projeto."
-          ctaLabel="Agendar Consultoria"
+          ctaLabel="Solicitar Projeto"
           variant="default"
         />
         <Services services={data.services ?? []} />
         <Portfolio projects={data.projects ?? []} />
         <InlineCtaBanner
           heading="Inspirado pelo nosso portfólio? Conte sua ideia."
-          ctaLabel="Solicitar Orçamento"
+          ctaLabel="Solicitar Projeto"
           variant="alt"
         />
         <About about={data.about} />

@@ -89,7 +89,7 @@ export function Navbar({ siteConfig, hasAbout }: NavbarProps) {
           <div className="hidden md:block">
             <CtaButton
               href="#contato"
-              label="Orçamento"
+              label="Solicitar Projeto"
               icon={<WhatsAppIcon className="h-4 w-4" />}
             />
           </div>

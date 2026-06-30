@@ -15,7 +15,7 @@ export const HERO_DEFAULTS = {
   titleHighlight: 'Pontualidade Absoluta',
   subtitle:
     'Projetamos e executamos móveis sob medida de alto padrão, combinando estética refinada, materiais nobres e o compromisso inegociável com os prazos de entrega.',
-  primaryCtaLabel: 'Agendar Consultoria',
+  primaryCtaLabel: 'Solicitar Projeto',
   secondaryCtaLabel: 'Ver Portfólio',
   socialProof: 'Projeto 3D sob medida · Entrega no prazo · Pelotas e região',
 } as const;
