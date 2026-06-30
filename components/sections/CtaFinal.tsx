@@ -1,14 +1,17 @@
 'use client';
 
 import { WhatsAppIcon } from '@/components/ui/WhatsAppButton';
+import { GoogleRating } from '@/components/ui/GoogleRating';
 import { buildWhatsAppLink, investmentOptions } from '@/lib/utils';
 import type { SiteConfig } from '@/lib/types';
+import type { GoogleRating as GoogleRatingData } from '@/lib/googleRating';
 
 interface CtaFinalProps {
   siteConfig: SiteConfig;
+  googleRating: GoogleRatingData | null;
 }
 
-export function CtaFinal({ siteConfig }: CtaFinalProps) {
+export function CtaFinal({ siteConfig, googleRating }: CtaFinalProps) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
@@ -48,6 +51,9 @@ export function CtaFinal({ siteConfig }: CtaFinalProps) {
               Nossa equipe está pronta para entender suas necessidades e apresentar soluções de
               design exclusivas com orçamentos detalhados.
             </p>
+            {googleRating && (
+              <GoogleRating review={googleRating} variant="badge" className="mt-8" />
+            )}
           </div>
 
           <div className="rounded-sm border border-border bg-card p-8">

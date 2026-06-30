@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { Suspense } from 'react';
 import { urlForImage } from '@/sanity/lib/image';
 import { CurrentYear } from '@/components/ui/CurrentYear';
-import { MapPin } from 'lucide-react';
+import { Clock, MapPin, Phone } from 'lucide-react';
 import { WhatsAppIcon } from '@/components/ui/WhatsAppButton';
 import { BUSINESS } from '@/lib/business';
 import type { SiteConfig } from '@/lib/types';
@@ -66,7 +66,40 @@ export function Footer({ siteConfig }: FooterProps) {
             <p className="mb-4 font-serif text-xs uppercase tracking-widest text-primary">
               Contato
             </p>
-            <ul className="flex items-center gap-3" role="list">
+            <ul className="space-y-3 font-serif text-sm" role="list">
+              <li>
+                <a
+                  href={BUSINESS.mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-3 rounded-sm text-foreground/80 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
+                >
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+                  <span>
+                    {BUSINESS.address.streetAddress}
+                    <br />
+                    <span className="text-muted">
+                      {BUSINESS.address.addressLocality}/{BUSINESS.address.addressRegion}
+                    </span>
+                  </span>
+                </a>
+              </li>
+              <li className="flex items-center gap-3 text-foreground/80">
+                <Clock className="h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+                <span>Seg–Sex, 8h às 17h30</span>
+              </li>
+              <li>
+                <a
+                  href={`tel:${BUSINESS.telephone}`}
+                  className="flex items-center gap-3 rounded-sm text-foreground/80 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
+                >
+                  <Phone className="h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+                  <span>{BUSINESS.phoneDisplay}</span>
+                </a>
+              </li>
+            </ul>
+
+            <ul className="mt-6 flex items-center gap-3 border-t border-border pt-5" role="list">
               <li>
                 <a
                   href={waLink}

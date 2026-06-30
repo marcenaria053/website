@@ -1,3 +1,5 @@
+import type { GoogleRating } from './googleRating';
+
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.053moveissobmedida.com';
 
@@ -9,6 +11,7 @@ export const BUSINESS = {
   url: SITE_URL,
   image: `${SITE_URL}/hero-053.webp`,
   telephone: '+5553999829915',
+  phoneDisplay: '(53) 99982-9915',
   googleProfileUrl: 'https://share.google/xcN8jikkFYs6lDqaa',
   mapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(MAPS_QUERY)}`,
   instagramUrl: 'https://www.instagram.com/053moveissobmedida',
@@ -23,10 +26,10 @@ export const BUSINESS = {
 } as const;
 
 /**
- * JSON-LD LocalBusiness (FurnitureStore). Sem `aggregateRating`: a empresa
- * ainda não tem avaliações no Google — incluir nota seria enganoso.
+ * JSON-LD LocalBusiness (FurnitureStore). O `aggregateRating` só entra quando
+ * há nota real do Google — nunca é inventado.
  */
-export const businessJsonLd = {
+export const buildBusinessJsonLd = (review?: GoogleRating | null) => ({
   '@context': 'https://schema.org',
   '@type': 'FurnitureStore',
   '@id': `${SITE_URL}/#business`,
@@ -52,4 +55,11 @@ export const businessJsonLd = {
     },
   ],
   sameAs: [BUSINESS.googleProfileUrl, BUSINESS.instagramUrl],
-} as const;
+  ...(review && {
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: review.rating,
+      reviewCount: review.count,
+    },
+  }),
+});

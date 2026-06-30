@@ -1,12 +1,15 @@
 import Image from 'next/image';
 import { CtaButton } from '@/components/ui/CtaButton';
 import { WhatsAppIcon } from '@/components/ui/WhatsAppButton';
+import { GoogleRating } from '@/components/ui/GoogleRating';
 import heroBackground from '@/public/hero-053.webp';
 import heroBackgroundMobile from '@/public/hero-053-mobile.webp';
 import type { SiteConfig } from '@/lib/types';
+import type { GoogleRating as GoogleRatingData } from '@/lib/googleRating';
 
 interface HeroProps {
   siteConfig: SiteConfig;
+  googleRating: GoogleRatingData | null;
 }
 
 export const HERO_DEFAULTS = {
@@ -20,7 +23,7 @@ export const HERO_DEFAULTS = {
   socialProof: 'Projeto 3D sob medida · Entrega no prazo · Pelotas e região',
 } as const;
 
-export function Hero({ siteConfig }: HeroProps) {
+export function Hero({ siteConfig, googleRating }: HeroProps) {
   const { hero } = siteConfig;
 
   const eyebrow = hero?.eyebrow ?? HERO_DEFAULTS.eyebrow;
@@ -126,12 +129,20 @@ export function Hero({ siteConfig }: HeroProps) {
           </a>
         </div>
 
-        {/* Microprova qualitativa — claims já verdadeiros no site (sem número/nota).
-            Mobile-safe: abaixo do CTA primário + text-xs, não empurra o CTA para fora da dobra. */}
-        {HERO_DEFAULTS.socialProof && (
-          <p className="mt-6 font-serif text-xs uppercase tracking-[0.15em] text-foreground/70 [text-shadow:0_1px_8px_rgba(0,0,0,0.75)] md:mt-8 md:[text-shadow:none]">
-            {HERO_DEFAULTS.socialProof}
-          </p>
+        {/* Prova social: nota real do Google (estrelas) quando disponível; senão,
+            claims qualitativos já verdadeiros. Mobile-safe: abaixo do CTA primário. */}
+        {googleRating ? (
+          <GoogleRating
+            review={googleRating}
+            variant="inline"
+            className="mt-6 [text-shadow:0_1px_8px_rgba(0,0,0,0.75)] md:mt-8 md:[text-shadow:none]"
+          />
+        ) : (
+          HERO_DEFAULTS.socialProof && (
+            <p className="mt-6 font-serif text-xs uppercase tracking-[0.15em] text-foreground/70 [text-shadow:0_1px_8px_rgba(0,0,0,0.75)] md:mt-8 md:[text-shadow:none]">
+              {HERO_DEFAULTS.socialProof}
+            </p>
+          )
         )}
       </div>
 

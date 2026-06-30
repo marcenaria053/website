@@ -17,6 +17,7 @@ import { Testimonials } from '@/components/sections/Testimonials';
 import { CtaFinal } from '@/components/sections/CtaFinal';
 import { Footer } from '@/components/sections/Footer';
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
+import { getGoogleRating } from '@/lib/googleRating';
 import { urlForImage } from '@/sanity/lib/image';
 
 async function getHomeData(): Promise<HomeData> {
@@ -70,12 +71,13 @@ export default async function HomePage() {
   const siteConfig = data.siteConfig ?? defaultSiteConfig;
   const heroSubtitle = siteConfig.hero?.subtitle ?? HERO_DEFAULTS.subtitle;
   const hasAbout = data.about != null;
+  const googleRating = await getGoogleRating();
 
   return (
     <>
       <Navbar siteConfig={siteConfig} hasAbout={hasAbout} />
       <main>
-        <Hero siteConfig={siteConfig} />
+        <Hero siteConfig={siteConfig} googleRating={googleRating} />
         <MetricsBar about={data.about} />
         <Ticker />
         <Process mobileIntro={heroSubtitle} />
@@ -92,9 +94,9 @@ export default async function HomePage() {
           variant="alt"
         />
         <About about={data.about} />
-        <Testimonials testimonials={data.testimonials ?? []} />
+        <Testimonials testimonials={data.testimonials ?? []} googleRating={googleRating} />
         <Suspense>
-          <CtaFinal siteConfig={siteConfig} />
+          <CtaFinal siteConfig={siteConfig} googleRating={googleRating} />
         </Suspense>
       </main>
       <Suspense>

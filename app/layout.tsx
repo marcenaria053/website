@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { Playfair_Display } from 'next/font/google';
 import { GoogleAnalytics } from '@next/third-parties/google';
-import { SITE_URL, businessJsonLd } from '@/lib/business';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { SITE_URL, buildBusinessJsonLd } from '@/lib/business';
+import { getGoogleRating } from '@/lib/googleRating';
 import './globals.css';
 
 const playfair = Playfair_Display({
@@ -16,8 +18,10 @@ export const metadata: Metadata = {
   description: 'Móveis sob medida de alto padrão com entrega rigorosamente no prazo. Pelotas.',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
+  const googleRating = await getGoogleRating();
+  const businessJsonLd = buildBusinessJsonLd(googleRating);
 
   return (
     <html lang="pt-BR" className={`${playfair.variable} h-full antialiased`}>
@@ -30,6 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd) }}
         />
         {children}
+        <SpeedInsights />
       </body>
       {gaId && <GoogleAnalytics gaId={gaId} />}
     </html>

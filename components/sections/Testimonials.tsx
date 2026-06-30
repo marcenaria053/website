@@ -1,9 +1,12 @@
 import Image from 'next/image';
 import { urlForImage } from '@/sanity/lib/image';
+import { GoogleRating } from '@/components/ui/GoogleRating';
 import type { Testimonial } from '@/lib/types';
+import type { GoogleRating as GoogleRatingData } from '@/lib/googleRating';
 
 interface TestimonialsProps {
   testimonials: Testimonial[];
+  googleRating: GoogleRatingData | null;
 }
 
 const fallback: Testimonial[] = [
@@ -23,7 +26,7 @@ const fallback: Testimonial[] = [
   },
 ];
 
-export function Testimonials({ testimonials }: TestimonialsProps) {
+export function Testimonials({ testimonials, googleRating }: TestimonialsProps) {
   const items = testimonials.length > 0 ? testimonials : fallback;
 
   return (
@@ -36,6 +39,7 @@ export function Testimonials({ testimonials }: TestimonialsProps) {
           <h2 className="font-serif text-3xl text-foreground md:text-4xl">
             O Que Dizem Sobre Nós
           </h2>
+          {googleRating && <GoogleRating review={googleRating} variant="badge" className="mt-6" />}
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
